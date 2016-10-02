@@ -1,0 +1,12 @@
+en:
+  js:
+    lattice:
+      admin:
+        menu_title: Lattices
+        page_title: Lattices
+        title: Name
+        slug: Slug
+        rows: Rows
+        columns: Columns
+        topics_per_cell: Topics per cell
+        new: New Lattice

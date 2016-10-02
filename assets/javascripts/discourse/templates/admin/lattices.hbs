@@ -1,0 +1,28 @@
+{{#if disabled}}
+  <div class="lattice-admin-disabled">{{i18n 'lattice.admin.disabled'}}</div>
+{{else}}
+  <div class='row groups'>
+    <div class='content-list span6'>
+      <h3>{{i18n 'lattice.admin.page_title'}}</h3>
+      {{#if model}}
+        <ul>
+          {{#each topic in model}}
+            <li>
+              {{#link-to 'adminLattice' topic.id}}{{lattice.title}}{{/link-to}}
+            </li>
+          {{/each}}
+        </ul>
+      {{else}}
+        <p>{{i18n 'search.no_results'}}</p>
+      {{/if}}
+      <div class="controls">
+        {{#link-to 'adminLattice' 'new' class="btn"}}
+          {{fa-icon "plus"}} {{i18n 'lattice.admin.new'}}
+        {{/link-to}}
+      </div>
+    </div>
+    <div class='content-editor'>
+      {{outlet}}
+    </div>
+  </div>
+{{/if}}

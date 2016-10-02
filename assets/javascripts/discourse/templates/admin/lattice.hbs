@@ -1,0 +1,37 @@
+{{#if model}}
+  <form class="form-horizontal">
+    <div>
+      <label for="title">{{i18n 'lattice.admin.title'}}</label>
+      {{input value=model.title}}
+    </div>
+
+    <div>
+      <label for="title">{{i18n 'lattice.admin.slug'}}</label>
+      {{input value=model.slug placeholder=model.title}}
+    </div>
+
+    <div>
+      <label for="rows">{{i18n 'lattice.admin.rows'}}</label>
+      {{tag-chooser tags=model.rows blackliste=model.rows allowCreate=false placeholder="" everyTag="true" unlimitedTagCount="true"}}
+    </div>
+
+    <div>
+      <label for="columns">{{i18n 'lattice.admin.columns'}}</label>
+      {{tag-chooser tags=model.columns blacklist=model.columns allowCreate=false placeholder="" everyTag="true" unlimitedTagCount="true"}}
+    </div>
+
+    <div>
+      <label for="topics_per_cell">{{i18n 'lattice.admin.topics_per_cell'}}</label>
+      {{input type="number" value=model.topics_per_cell}}
+    </div>
+
+    <div class='buttons'>
+      <button {{action "save"}} {{bind-attr disabled="disableSave"}} class='btn btn-primary'>{{i18n 'admin.customize.save'}}</button>
+      {{#if model.id}}
+        <button {{action "destroy"}} class='btn btn-danger'>{{fa-icon "trash-o"}}{{i18n 'admin.customize.delete'}}</button>
+      {{/if}}
+    </div>
+  </form>
+{{else}}
+  <p>{{i18n 'search.no_results'}}</p>
+{{/if}}
