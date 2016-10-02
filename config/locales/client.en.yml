@@ -4,6 +4,7 @@ en:
       admin:
         menu_title: Lattices
         page_title: Lattices
+        none_selected: Please select a lattice from the left
         title: Name
         slug: Slug
         rows: Rows
