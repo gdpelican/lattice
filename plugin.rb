@@ -15,6 +15,32 @@ after_initialize do
       isolate_namespace Lattice
     end
 
+    class Model < PluginStoreRow
+      LATTICE_ATTRIBUTES = [:title, :slug, :rows, :columns, :topics_per_cell]
+
+      default_scope { where(plugin_name: LATTICE_PLUGIN_NAME) }
+
+      def initialize(attrs = {})
+        super attrs.merge(plugin_name: LATTICE_PLUGIN_NAME, key: SecureRandom.hex(6), type_name: :JSON)
+      end
+
+      def value
+        JSON.parse(self[:value] || "{}")
+      end
+
+      def value=(value)
+        raise NotImplementedError.new # only allow individual setting of attributes
+      end
+
+      LATTICE_ATTRIBUTES.each do |field|
+        define_method field, ->          { value[field.to_s] }
+        define_method "#{field}=", ->(new_value) {
+          self[:value] = value.tap { |current| current[field.to_s] = new_value }.to_json
+        }
+      end
+
+    end
+
     class Controller < ::ApplicationController
       requires_plugin LATTICE_PLUGIN_NAME
       define_method :show, ->{}
@@ -24,7 +50,7 @@ after_initialize do
       attributes :title, :slug, :rows, :columns, :topics_per_cell
     end
 
-    Engine.routes.draw { get "/:id(/:slug)" => "lattices#show" }
+    Engine.routes.draw { get "/:id(/:slug)" => "#show" }
   end
 
   Discourse::Application.routes.append do
@@ -56,11 +82,11 @@ after_initialize do
     private
 
     def build_lattice
-      @lattice = Lattice.new(lattice_params)
+      @lattice = Lattice::Model.new(lattice_params)
     end
 
     def find_lattice
-      @lattice = Lattice.find(params[:id])
+      @lattice = Lattice::Model.find(params[:id])
     end
 
     def respond
@@ -72,7 +98,7 @@ after_initialize do
     end
 
     def lattice_params
-      params.require(:lattice).permit(:name, :slug, :rows, :columns, :categories, :topics_per_cell)
+      params.require(:lattice).permit(Lattice::Model::LATTICE_ATTRIBUTES)
     end
   end
 

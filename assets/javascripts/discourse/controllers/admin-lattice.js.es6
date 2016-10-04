@@ -6,8 +6,8 @@ export default Ember.Controller.extend({
   actions: {
 
     save() {
-      this.set('disableSave', true);
-      ajax(this.get('model.id'), {
+      this.set('disableSave', true)
+      ajax(`/admin/lattices/${this.get('model.id') || ''}`, {
         type: "POST",
         data: {
           lattice: {
@@ -28,7 +28,7 @@ export default Ember.Controller.extend({
     },
 
     destroy() {
-      this.set('disableSave', true);
+      this.set('disableSave', true)
 
       bootbox.confirm(
         I18n.t("lattice.admin.delete_confirm"),
@@ -36,7 +36,7 @@ export default Ember.Controller.extend({
         I18n.t("yes_value"),
         (confirmed) => {
           if (confirmed) {
-            ajax(this.get('model.id'), { type: "DELETE" }).then(function() {
+            ajax(`/admin/lattices/${this.get('model.id') || ''}`, { type: "DELETE" }).then(function() {
               this.transitionToRoute('adminLattices.index')
             }).catch(function() {
               bootbox.alert(I18n.t("lattice.admin.delete_failed"))
@@ -47,7 +47,7 @@ export default Ember.Controller.extend({
             this.set('disableSave', false);
           }
         }
-      );
+      )
     }
   }
-});
+})
