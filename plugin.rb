@@ -16,7 +16,7 @@ after_initialize do
     end
 
     class Model < PluginStoreRow
-      LATTICE_ATTRIBUTES = [:title, :slug, :rows, :columns, :topics_per_cell]
+      LATTICE_ATTRIBUTES = [:title, :slug, :rows, :columns, :topics_per_cell, :limit_by_category, :category_id]
 
       default_scope { where(plugin_name: LATTICE_PLUGIN_NAME) }
 
@@ -47,7 +47,16 @@ after_initialize do
     end
 
     class Serializer < ::ActiveModel::Serializer
-      attributes :title, :slug, :rows, :columns, :topics_per_cell
+      attributes :id
+      attributes *Model::LATTICE_ATTRIBUTES
+
+      def category_id
+        object.category_id.to_i if object.category_id
+      end
+
+      def limit_by_category
+        object.limit_by_category == 'true'
+      end
     end
 
     Engine.routes.draw { get "/:id(/:slug)" => "#show" }
@@ -62,10 +71,17 @@ after_initialize do
 
   class Admin::LatticesController < ::ApplicationController
     requires_plugin LATTICE_PLUGIN_NAME
-    define_method :index, ->{}
-    define_method :show, ->{}
     before_action :build_lattice, only: :create
-    before_action :find_lattice, only: [:update, :destroy]
+    before_action :find_lattice, only: [:show, :update, :destroy]
+
+    def show
+      respond { @lattice }
+    end
+
+    def index
+      @lattices = Lattice::Model.all
+      render json: ActiveModel::ArraySerializer.new(@lattices, each_serializer: Lattice::Serializer).as_json, status: 200
+    end
 
     def create
       respond { @lattice.save }
@@ -91,7 +107,7 @@ after_initialize do
 
     def respond
       if yield
-        render json: Lattice::Serializer.new(@lattice).as_json, status: 200
+        render json: Lattice::Serializer.new(@lattice, root: false).as_json, status: 200
       else
         render json: { message: "Unable to perform action", errors: @lattice.errors }, status: 422
       end

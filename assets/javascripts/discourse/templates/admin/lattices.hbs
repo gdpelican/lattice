@@ -6,9 +6,9 @@
       <h3>{{i18n 'lattice.admin.page_title'}}</h3>
       {{#if model}}
         <ul>
-          {{#each topic in model}}
+          {{#each lattice in model}}
             <li>
-              {{#link-to 'adminLattice' topic.id}}{{lattice.title}}{{/link-to}}
+              {{#link-to 'adminLattice' lattice.id}}{{lattice.title}}{{/link-to}}
             </li>
           {{/each}}
         </ul>

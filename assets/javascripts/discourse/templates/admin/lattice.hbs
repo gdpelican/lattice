@@ -21,6 +21,16 @@
     </div>
 
     <div>
+      <label for="limit_by_category">
+        {{input type="checkbox" checked=model.limit_by_category}}
+        {{i18n 'lattice.admin.limit_by_category'}}
+      </label>
+      {{#if model.limit_by_category}}
+        {{category-chooser value=model.category_id}}
+      {{/if}}
+    </div>
+
+    <div>
       <label for="topics_per_cell">{{i18n 'lattice.admin.topics_per_cell'}}</label>
       {{input type="number" value=model.topics_per_cell}}
     </div>

@@ -8,14 +8,16 @@ export default Ember.Controller.extend({
     save() {
       this.set('disableSave', true)
       ajax(`/admin/lattices/${this.get('model.id') || ''}`, {
-        type: "POST",
+        type: (this.get('model.id') ? 'PATCH' : 'POST'),
         data: {
           lattice: {
-            title:           this.model.get('title'),
-            slug:            this.model.get('slug'),
-            row:             this.model.get('rows'),
-            columns:         this.model.get('columns'),
-            topics_per_cell: this.model.get('topics_per_cell'),
+            title:             this.model.get('title'),
+            slug:              this.model.get('slug'),
+            rows:              this.model.get('rows'),
+            columns:           this.model.get('columns'),
+            limit_by_category: this.model.get('limit_by_category'),
+            category_id:       this.model.get('category_id'),
+            topics_per_cell:   this.model.get('topics_per_cell'),
           }
         }
       }).then((saved) => {
