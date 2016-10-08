@@ -114,7 +114,8 @@ after_initialize do
     end
 
     def lattice_params
-      params.require(:lattice).permit(Lattice::Model::LATTICE_ATTRIBUTES)
+      params.require(:lattice)
+            .permit(:title, :slug, :topics_per_cell, :limit_by_category, :category_id, rows: [], columns: [])
     end
   end
 

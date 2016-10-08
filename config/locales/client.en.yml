@@ -9,5 +9,6 @@ en:
         slug: Slug
         rows: Rows
         columns: Columns
+        limit_by_category: Limit by category
         topics_per_cell: Topics per cell
         new: New Lattice
