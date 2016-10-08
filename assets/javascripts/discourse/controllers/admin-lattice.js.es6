@@ -1,7 +1,14 @@
+import computed from 'ember-addons/ember-computed-decorators';
 import { ajax } from 'discourse/lib/ajax'
+import parameterize from '../lib/parameterize'
 
 export default Ember.Controller.extend({
   needs: ['adminLattices'],
+
+  @computed('model.title')
+  parameterizedTitle() {
+    return parameterize(this.get('model.title'))
+  },
 
   actions: {
 
