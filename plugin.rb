@@ -43,7 +43,9 @@ after_initialize do
 
     class Controller < ::ApplicationController
       requires_plugin LATTICE_PLUGIN_NAME
-      define_method :show, ->{}
+      def show
+        render json: Serializer.new(Model.find(params[:id]), root: false).as_json, status: 200
+      end
     end
 
     class Serializer < ::ActiveModel::Serializer
