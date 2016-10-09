@@ -1,1 +1,34 @@
-<div>{{model.title}}</div>
+<div class="lattice-show">
+  <h1 class="lattice-title">{{model.title}}</h1>
+  <span class="category">{{bound-category-link model.category allowUncategorized=true}}</span>
+  <table class="lattice-table topic-list">
+    <thead class="lattice-table-head">
+      <th />
+      {{#each model.columns as |column|}}
+        <th class="lattice-table-column-name sortable">
+          {{#link-to 'tags.show' column}}
+            <strong>{{column}}</strong>
+          {{/link-to}}
+        </th>
+      {{/each}}
+    </thead>
+    <tbody class="lattice-table-body">
+      {{#each model.rows as |row|}}
+        <tr class="lattice-table-row">
+          <td class="lattice-table-row-name">
+            {{#link-to 'tags.show' row}}
+              <strong>{{row}}</strong>
+            {{/link-to}}
+          </td>
+          {{#each model.columns as |column|}}
+            <td class="lattice-table-cell">
+              {{#each (get model "topics" row column) as |topic|}}
+                <span>{{topic.title}}</span>
+              {{/each}}
+            </td>
+          {{/each}}
+        </tr>
+      {{/each}}
+    </tbody>
+  </table>
+</div>

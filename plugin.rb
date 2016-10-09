@@ -4,6 +4,8 @@
 # authors: James Kiesel (gdpelican)
 # url: https://github.com/gdpelican/lattice
 
+register_asset "stylesheets/lattice.css"
+
 LATTICE_PLUGIN_NAME ||= "lattice".freeze
 
 # enabled_site_setting :lattice_enabled
@@ -24,6 +26,24 @@ after_initialize do
         super attrs.merge(plugin_name: LATTICE_PLUGIN_NAME, key: SecureRandom.hex(6), type_name: :JSON)
       end
 
+      def topics_for(user)
+        group_topics_by_tag(available_topics_for(user), :rows).tap do |table|
+          table.keys.each do |row|
+            table[row] = group_topics_by_tag(table[row], :columns)
+            table[row].keys.each do |column|
+              table[row][column] = ActiveModel::ArraySerializer.new(table[row][column],
+                each_serializer: BasicTopicSerializer,
+                root: false
+              ).as_json
+            end
+          end
+        end
+      end
+
+      def all_tags_for(user)
+        available_topics_for(user)
+      end
+
       def value
         JSON.parse(self[:value] || "{}")
       end
@@ -33,10 +53,28 @@ after_initialize do
       end
 
       LATTICE_ATTRIBUTES.each do |field|
-        define_method field, ->          { value[field.to_s] }
+        define_method field, -> { value[field.to_s] }
         define_method "#{field}=", ->(new_value) {
           self[:value] = value.tap { |current| current[field.to_s] = new_value }.to_json
         }
+      end
+
+      def limit_by_category
+        value['limit_by_category'] == 'true'
+      end
+
+      def category_id
+        value['category_id'].to_i
+      end
+
+      private
+
+      def available_topics_for(user)
+        TopicQuery.new(user, category: (self.category_id if self.limit_by_category), tags: self.rows).latest_results
+      end
+
+      def group_topics_by_tag(topics, field)
+        topics.group_by { |topic| (topic.tags.pluck(:name) & send(field)).first }
       end
 
     end
@@ -44,20 +82,26 @@ after_initialize do
     class Controller < ::ApplicationController
       requires_plugin LATTICE_PLUGIN_NAME
       def show
-        render json: Serializer.new(Model.find(params[:id]), root: false).as_json, status: 200
+        render json: Serializer.new(Model.find(params[:id]), scope: serializer_scope, root: false).as_json, status: 200
+      end
+
+      private
+
+      def serializer_scope
+        { current_user: current_user, with_topics: true }
       end
     end
 
     class Serializer < ::ActiveModel::Serializer
-      attributes :id
+      attributes :id, :topics
       attributes *Model::LATTICE_ATTRIBUTES
 
-      def category_id
-        object.category_id.to_i if object.category_id
+      def topics
+        object.topics_for(Hash(scope)[:current_user])
       end
 
-      def limit_by_category
-        object.limit_by_category == 'true'
+      def include_topics?
+        Hash(scope)[:with_topics]
       end
     end
 
