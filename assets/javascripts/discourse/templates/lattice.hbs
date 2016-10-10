@@ -1,6 +1,9 @@
 <div class="lattice-show">
   <h1 class="lattice-title">{{model.title}}</h1>
-  <span class="category">{{bound-category-link model.category allowUncategorized=true}}</span>
+  {{#if model.limit_by_category}}
+    <span class="category">{{bound-category-link model.category allowUncategorized=true}}</span>
+  {{/if}}
+  <p>{{model.description}}</p>
   <table class="lattice-table topic-list">
     <thead class="lattice-table-head">
       <th />

@@ -6,8 +6,13 @@
     </div>
 
     <div>
-      <label for="title">{{i18n 'lattice.admin.slug'}}</label>
+      <label for="slug">{{i18n 'lattice.admin.slug'}}</label>
       {{input value=model.slug placeholder=parameterizedTitle}}
+    </div>
+
+    <div>
+      <label for="description">{{i18n 'lattice.admin.description'}}</label>
+      {{textarea value=model.description}}
     </div>
 
     <div>

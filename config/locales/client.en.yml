@@ -7,6 +7,7 @@ en:
         none_selected: Please select a lattice from the left
         title: Name
         slug: Slug
+        description: Description
         rows: Rows
         columns: Columns
         limit_by_category: Limit by category

@@ -18,7 +18,7 @@ after_initialize do
     end
 
     class Model < PluginStoreRow
-      LATTICE_ATTRIBUTES = [:title, :slug, :rows, :columns, :topics_per_cell, :limit_by_category, :category_id]
+      LATTICE_ATTRIBUTES = [:title, :slug, :description, :rows, :columns, :topics_per_cell, :limit_by_category, :category_id]
 
       default_scope { where(plugin_name: LATTICE_PLUGIN_NAME) }
 
@@ -161,7 +161,7 @@ after_initialize do
 
     def lattice_params
       params.require(:lattice)
-            .permit(:title, :slug, :topics_per_cell, :limit_by_category, :category_id, rows: [], columns: [])
+            .permit(:title, :slug, :description, :topics_per_cell, :limit_by_category, :category_id, rows: [], columns: [])
     end
   end
 

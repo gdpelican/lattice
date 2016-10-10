@@ -20,6 +20,7 @@ export default Ember.Controller.extend({
           lattice: {
             title:             this.model.get('title'),
             slug:              this.model.get('slug'),
+            description:       this.model.get('description'),
             rows:              this.model.get('rows'),
             columns:           this.model.get('columns'),
             limit_by_category: this.model.get('limit_by_category'),
