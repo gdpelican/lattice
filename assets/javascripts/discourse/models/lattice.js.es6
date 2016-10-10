@@ -8,6 +8,7 @@ export default RestModel.extend({
 
   _instantiateTopicData: function() {
     let topics = this.get('topics')
+    if (!topics) { return }
     Object.keys(topics).map((row) => {
       Object.keys(topics[row]).map((column) => {
         topics[row][column] = topics[row][column].map(function(topic) { return Topic.create(topic) })
