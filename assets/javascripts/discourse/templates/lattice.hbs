@@ -23,7 +23,7 @@
           {{#each model.columns as |column|}}
             <td class="lattice-table-cell">
               {{#each (get model "topics" row column) as |topic|}}
-                <span>{{topic.title}}</span>
+                <span>{{topic-link topic}}</span>
               {{/each}}
             </td>
           {{/each}}
