@@ -12,21 +12,6 @@ export default Ember.View.extend(CleansUp, {
   classNameBindings: ['controller.visible:show', 'controller.showBadges', 'controller.hasCardBadgeImage'],
   allowBackgrounds: setting('allow_profile_backgrounds'),
 
-  addBackground: function() {
-    const url = this.get('controller.user.card_background');
-
-    if (!this.get('allowBackgrounds')) { return; }
-
-    const $this = this.$();
-    if (!$this) { return; }
-
-    if (Ember.isEmpty(url)) {
-      $this.css('background-image', '').addClass('no-bg');
-    } else {
-      $this.css('background-image', "url(" + Discourse.getURLWithCDN(url) + ")").removeClass('no-bg');
-    }
-  }.observes('controller.user.card_background'),
-
   _setup: function() {
     afterTransition(this.$(), this._hide.bind(this));
 
