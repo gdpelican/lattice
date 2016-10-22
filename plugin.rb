@@ -4,7 +4,8 @@
 # authors: James Kiesel (gdpelican)
 # url: https://github.com/gdpelican/lattice
 
-register_asset "stylesheets/lattice.css"
+register_asset "stylesheets/lattice.scss"
+register_asset "stylesheets/topic-card.scss"
 
 LATTICE_PLUGIN_NAME ||= "lattice".freeze
 
@@ -32,7 +33,7 @@ after_initialize do
             table[row] = group_topics_by_tag(table[row], :columns)
             table[row].keys.each do |column|
               table[row][column] = ActiveModel::ArraySerializer.new(table[row][column],
-                each_serializer: BasicTopicSerializer,
+                each_serializer: TopicSerializer,
                 root: false
               ).as_json
             end
@@ -106,6 +107,18 @@ after_initialize do
     end
 
     Engine.routes.draw { get "/:id(/:slug)" => "#show" }
+
+    class TopicSerializer < BasicTopicSerializer
+      attributes :posts_count, :views, :participant_count, :like_count, :last_posted_at, :created_at, :users
+
+      def users
+        {
+          created_by:  BasicUserSerializer.new(object.user, scope: scope, root: false),
+          last_poster: BasicUserSerializer.new(object.last_poster, scope: scope, root: false)
+        }
+      end
+
+    end
   end
 
   Discourse::Application.routes.append do

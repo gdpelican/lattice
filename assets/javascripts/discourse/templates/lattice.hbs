@@ -26,7 +26,9 @@
           {{#each model.columns as |column|}}
             <td class="lattice-table-cell">
               {{#each (get model "topics" row column) as |topic|}}
-                <span>{{topic-link topic}}</span>
+                <a href="#" data-topic-card="{{topic.id}}">
+                  {{avatar topic.users.created_by imageSize="small" title=topic.title}}
+                </a>
               {{/each}}
             </td>
           {{/each}}
@@ -35,3 +37,4 @@
     </tbody>
   </table>
 </div>
+{{render "topic-card"}}

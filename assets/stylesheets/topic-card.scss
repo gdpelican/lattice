@@ -1,0 +1,23 @@
+#topic-card {
+  position: absolute;
+  width: 500px;
+  left: -9999px;
+  top: -9999px;
+  z-index: 990;
+  box-shadow: 1px 2px 6px rgba(0,0,0, .25);
+  margin-top: -2px;
+  color: $user_card_primary;
+  background: $user_card_background center center;
+  background-size: cover;
+  min-height: 175px;
+  -webkit-transition: opacity .2s, -webkit-transform .2s;
+          transition: opacity .2s, transform .2s;
+
+  opacity: 0;
+  @include transform(scale(.9));
+
+  &.show {
+    opacity: 1;
+    @include transform(scale(1));
+  }
+}
