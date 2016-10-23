@@ -4,6 +4,7 @@ en:
       client:
         participants: Participants
         view_topic: View topic
+        view_more: View more
       admin:
         menu_title: Lattices
         page_title: Lattices

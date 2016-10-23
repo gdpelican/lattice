@@ -9,9 +9,9 @@
       <th />
       {{#each model.columns as |column|}}
         <th class="lattice-table-column-name sortable">
-          {{#link-to 'tags.show' column}}
+          <a href="{{tagUrlFor column}}">
             <strong>{{column}}</strong>
-          {{/link-to}}
+          </a>
         </th>
       {{/each}}
     </thead>
@@ -19,17 +19,29 @@
       {{#each model.rows as |row|}}
         <tr class="lattice-table-row">
           <td class="lattice-table-row-name">
-            {{#link-to 'tags.show' row}}
+            <a href="{{tagUrlFor row}}">
               <strong>{{row}}</strong>
-            {{/link-to}}
+            </a>
           </td>
           {{#each model.columns as |column|}}
             <td class="lattice-table-cell">
-              {{#each (get model "topics" row column) as |topic|}}
-                <a href="#" data-topic-card="{{topic.id}}">
-                  {{avatar topic.created_by imageSize="small" title=topic.title}}
-                </a>
-              {{/each}}
+              {{#if site.mobileView}}
+                <div class="lattice-mobile-cell">
+                  {{#link-to 'tags.show' row column}}
+                    <div class="lattice-topic-count">{{get model "topics" row column "data" "length"}}</div>
+                    <div>{{i18n 'groups.topics'}}</div>
+                  {{/link-to}}
+                </div>
+              {{else}}
+                {{#each (get model "topics" row column "data") as |topic|}}
+                  <a href="#" data-topic-card="{{topic.id}}">
+                    {{avatar topic.created_by imageSize="small" title=topic.title}}
+                  </a>
+                {{/each}}
+                {{#if (get model "topics" row column "view_more")}}
+                  {{#link-to 'tags.show' row column class="lattice-view-more"}}{{i18n 'lattice.client.view_more'}}{{/link-to}}
+                {{/if}}
+              {{/if}}
             </td>
           {{/each}}
         </tr>
