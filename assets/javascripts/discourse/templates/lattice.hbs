@@ -28,7 +28,7 @@
               {{#if site.mobileView}}
                 <div class="lattice-mobile-cell">
                   {{#link-to 'tags.show' row column}}
-                    <div class="lattice-topic-count">{{get model "topics" row column "data" "length"}}</div>
+                    <div class="lattice-topic-count">{{get model "topics" row column "count"}}</div>
                     <div>{{i18n 'groups.topics'}}</div>
                   {{/link-to}}
                 </div>
