@@ -1,6 +1,9 @@
 en:
   js:
     lattice:
+      client:
+        participants: Participants
+        view_topic: View topic
       admin:
         menu_title: Lattices
         page_title: Lattices
