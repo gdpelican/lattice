@@ -9,6 +9,7 @@ en:
         menu_title: Lattices
         page_title: Lattices
         none_selected: Please select a lattice from the left
+        enabled: Enabled
         title: Name
         slug: Slug
         description: Description

@@ -1,6 +1,9 @@
 {{#if model}}
   <form class="form-horizontal">
     <div>
+      <label for="enabled">{{i18n 'lattice.admin.enabled'}}</label>
+      {{input type='checkbox' checked=model.enabled}}
+
       <label for="title">{{i18n 'lattice.admin.title'}}</label>
       {{input value=model.title}}
     </div>

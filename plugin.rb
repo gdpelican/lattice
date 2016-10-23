@@ -19,9 +19,11 @@ after_initialize do
     end
 
     class Model < PluginStoreRow
-      LATTICE_ATTRIBUTES = [:title, :slug, :description, :rows, :columns, :topics_per_cell, :limit_by_category, :category_id]
+      LATTICE_ATTRIBUTES = [:enabled, :title, :slug, :description, :rows, :columns, :topics_per_cell, :limit_by_category, :category_id]
 
-      default_scope { where(plugin_name: LATTICE_PLUGIN_NAME) }
+      def self.enabled
+        where(plugin_name: LATTICE_PLUGIN_NAME).select(&:enabled)
+      end
 
       def initialize(attrs = {})
         super attrs.merge(plugin_name: LATTICE_PLUGIN_NAME, key: SecureRandom.hex(6), type_name: :JSON)
@@ -60,6 +62,14 @@ after_initialize do
         }
       end
 
+      def enabled
+        value['enabled'] == 'true'
+      end
+
+      def slug
+        value.fetch('slug', title.parameterize)
+      end
+
       def limit_by_category
         value['limit_by_category'] == 'true'
       end
@@ -82,6 +92,10 @@ after_initialize do
 
     class Controller < ::ApplicationController
       requires_plugin LATTICE_PLUGIN_NAME
+      def index
+        render json: ActiveModel::ArraySerializer.new(Model.enabled, each_serializer: Serializer, root: :lattices).as_json, status: 200
+      end
+
       def show
         render json: Serializer.new(Model.find(params[:id]), scope: serializer_scope, root: false).as_json, status: 200
       end
@@ -113,6 +127,7 @@ after_initialize do
     Engine.routes.draw do
       get "/topic-card/:id" => "#topic_card"
       get "/:id(/:slug)" => "#show"
+      get "/" => "#index"
     end
 
     class TopicSerializer < BasicTopicSerializer
@@ -191,7 +206,7 @@ after_initialize do
 
     def lattice_params
       params.require(:lattice)
-            .permit(:title, :slug, :description, :topics_per_cell, :limit_by_category, :category_id, rows: [], columns: [])
+            .permit(:enabled, :title, :slug, :description, :topics_per_cell, :limit_by_category, :category_id, rows: [], columns: [])
     end
   end
 

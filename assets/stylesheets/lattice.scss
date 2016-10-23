@@ -1,3 +1,21 @@
+.lattice-dropdown {
+  background: #e9e9e9;
+  line-height: 30px;
+  padding: 7px;
+  color: #222 !important;
+}
+
+.lattice-dropdown-text {
+  margin-right: 10px;
+}
+
+.lattice-dropdown-item {
+  padding: 5px;
+  font-size: 12px;
+  font-weight: bold;
+  a { color: #222 !important; }
+}
+
 .lattice-title {
   margin-bottom: 5px;
 }

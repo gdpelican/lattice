@@ -18,6 +18,7 @@ export default Ember.Controller.extend({
         type: (this.get('model.id') ? 'PATCH' : 'POST'),
         data: {
           lattice: {
+            enabled:           this.model.get('enabled'),
             title:             this.model.get('title'),
             slug:              this.model.get('slug'),
             description:       this.model.get('description'),

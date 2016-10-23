@@ -1,4 +1,3 @@
-import { wantsNewWindow } from 'discourse/lib/intercept-click';
 import { setting } from 'discourse/lib/computed';
 import CleansUp from 'discourse/mixins/cleans-up';
 import afterTransition from 'discourse/lib/after-transition';
@@ -31,10 +30,16 @@ export default Ember.View.extend(CleansUp, {
       });
 
     $('#main-outlet').on(clickDataExpand, '[data-topic-card]', (e) => {
-      if (wantsNewWindow(e)) { return; }
       let $target = $(e.currentTarget)
       let topicId = $target.data('topic-card')
-      this.get('controller').setTopic(this.get('controller.parentController.model').getTopic(topicId))
+      let topic = this.get('controller.parentController.model').getTopic(topicId)
+
+      if (e.ctrlKey || e.metaKey) {
+        window.open(topic.get('lastUnreadUrl'))
+        return false
+      }
+
+      this.get('controller').setTopic(topic)
       return this._willShow($target);
     });
 
@@ -44,7 +49,7 @@ export default Ember.View.extend(CleansUp, {
   _willShow(target) {
     const rtl = ($('html').css('direction')) === 'rtl';
     if (!target) { return; }
-    const width = this.$().width();
+    const width = $("#topic-card").width();
 
     Ember.run.schedule('afterRender', () => {
       if (target) {
@@ -70,8 +75,7 @@ export default Ember.View.extend(CleansUp, {
           }
 
           position.top -= $('#main-outlet').offset().top;
-          this.$().css(position);
-          Ember.run.next(null, () => this.$('a:first').focus() );
+          $('#topic-card').css(position);
         }
 
         this.get('controller').set('visible', true);

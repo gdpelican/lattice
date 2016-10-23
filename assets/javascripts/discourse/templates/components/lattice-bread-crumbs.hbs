@@ -1,0 +1,18 @@
+{{#if lattices}}
+  <a href {{action "expand"}} class="lattice-dropdown">
+    <i class="fa fa-table"></i>
+    <span class="lattice-dropdown-text">{{i18n 'lattice.admin.menu_title'}}</span>
+    {{#if expanded}}
+      <i class="fa fa-caret-down" />
+    {{else}}
+      <i class="fa fa-caret-right" />
+    {{/if}}
+  </a>
+  <section class="{{unless expanded 'hidden'}} category-dropdown-menu chooser">
+    {{#each lattices as |lattice|}}
+      <div class="lattice-dropdown-item">
+        <a href="/lattices/{{lattice.id}}">{{lattice.title}}</a>
+      </div>
+    {{/each}}
+  </section>
+{{/if}}
