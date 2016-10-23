@@ -1,13 +1,42 @@
 {{#if visible}}
-  <div class="lattice-topic-card card-content">
-    <div class="topic-card-header">
-      {{topicId}}
-      <h1>{{topic.title}}</h1>
-      <div>{{topic.description}}</div>
-    </div>
-    <div class="topic-card-footer">
-      <div>{{i18n.created_lowercase}}</div>
+  {{#if topic.card_fetched}}
+    <div class="lattice-topic-card card-content">
+      <div class="topic-card-header">
+        {{topicId}}
+        <h1>{{topic.title}}</h1>
+        <div>{{topic.description}}</div>
+      </div>
+      <div class="topic-card-footer">
+        <div>
+          <div>{{i18n 'created_lowercase'}}</div>
+          <div>{{avatar topic.created_by imageSize="small"}}</div>
+          <div>{{format-date topic.created_at format="tiny"}}</div>
+        </div>
+        <div>
+          <div>{{i18n 'last_reply_lowercase'}}</div>
+          <div>{{avatar topic.last_poster imageSize="small"}}</div>
+          <div>{{format-date topic.last_posted_at format="tiny"}}</div>
+        </div>
 
+        <div>
+          <div>{{topic.posts_count}}</div>
+          <div>{{i18n 'replies'}}</div>
+        </div>
+        <div>
+          <div>{{topic.views}}</div>
+          <div>{{i18n 'views'}}</div>
+        </div>
+        <div>
+          <div>{{topic.participant_count}}</div>
+          <div>{{i18n 'participants'}}</div>
+        </div>
+        <div>
+          <div>{{topic.like_count}}</div>
+          <div>{{i18n 'likes'}}</div>
+        </div>
+      </div>
     </div>
-  </div>
+  {{else}}
+    {{loading-spinner}}
+  {{/if}}
 {{/if}}

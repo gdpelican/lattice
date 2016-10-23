@@ -86,6 +86,10 @@ after_initialize do
         render json: Serializer.new(Model.find(params[:id]), scope: serializer_scope, root: false).as_json, status: 200
       end
 
+      def topic_card
+        render json: TopicCardSerializer.new(Topic.find(params[:id]), root: false).as_json, status: 200
+      end
+
       private
 
       def serializer_scope
@@ -106,16 +110,29 @@ after_initialize do
       end
     end
 
-    Engine.routes.draw { get "/:id(/:slug)" => "#show" }
+    Engine.routes.draw do
+      get "/topic-card/:id" => "#topic_card"
+      get "/:id(/:slug)" => "#show"
+    end
 
     class TopicSerializer < BasicTopicSerializer
-      attributes :posts_count, :views, :participant_count, :like_count, :last_posted_at, :created_at, :users
+      attributes :created_by
 
-      def users
-        {
-          created_by:  BasicUserSerializer.new(object.user, scope: scope, root: false),
-          last_poster: BasicUserSerializer.new(object.last_poster, scope: scope, root: false)
-        }
+      def created_by
+        BasicUserSerializer.new(object.user, scope: scope, root: false)
+      end
+    end
+
+    class TopicCardSerializer < BasicTopicSerializer
+      include UserNotificationsHelper
+      attributes :last_poster, :excerpt, :posts_count, :views, :participant_count, :like_count, :last_posted_at, :created_at
+
+      def last_poster
+        BasicUserSerializer.new(object.last_poster, scope: scope, root: false)
+      end
+
+      def excerpt
+        first_paragraph_from object.posts.first.cooked
       end
 
     end

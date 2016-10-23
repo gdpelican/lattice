@@ -27,7 +27,7 @@
             <td class="lattice-table-cell">
               {{#each (get model "topics" row column) as |topic|}}
                 <a href="#" data-topic-card="{{topic.id}}">
-                  {{avatar topic.users.created_by imageSize="small" title=topic.title}}
+                  {{avatar topic.created_by imageSize="small" title=topic.title}}
                 </a>
               {{/each}}
             </td>

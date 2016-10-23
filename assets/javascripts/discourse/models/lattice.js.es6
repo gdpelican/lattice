@@ -19,8 +19,9 @@ export default RestModel.extend({
       Object.keys(topics[row]).map((column) => {
         topics[row][column] = topics[row][column].map(function(topic) {
           let t = Topic.create(topic)
+          if (topic.last_poster) { t.set('last_poster', topic.last_poster) }
+          if (topic.created_by)  { t.set('created_by', topic.created_by) }
           allTopics.push(t)
-          t.set('users', topic.users)
           return t
         })
       })

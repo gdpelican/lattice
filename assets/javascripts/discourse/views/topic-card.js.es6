@@ -34,7 +34,7 @@ export default Ember.View.extend(CleansUp, {
       if (wantsNewWindow(e)) { return; }
       let $target = $(e.currentTarget)
       let topicId = $target.data('topic-card')
-      this.get('controller').set('topic', this.get('controller.parentController.model').getTopic(topicId))
+      this.get('controller').setTopic(this.get('controller.parentController.model').getTopic(topicId))
       return this._willShow($target);
     });
 
