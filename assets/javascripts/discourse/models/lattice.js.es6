@@ -33,5 +33,10 @@ export default RestModel.extend({
     })
     this.set('allTopics', allTopics)
     this.set('topics', topics)
-  }.on('init')
+  }.on('init'),
+
+  updateFromJson(json) {
+    const keys = Object.keys(json);
+    keys.forEach(key => this.set(key, json[key]));
+  }
 })

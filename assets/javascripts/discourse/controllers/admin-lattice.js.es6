@@ -30,6 +30,11 @@ export default Ember.Controller.extend({
           }
         }
       }).then((saved) => {
+        let updated = _.find(this.container.lookup('controller:adminLattices').get('model'), function(l) {
+          return l.id == saved.id
+        })
+        if (updated) { updated.updateFromJson(saved) }
+        
         this.transitionToRoute('adminLattice', saved.id)
       }).catch(() => {
         bootbox.alert(I18n.t("lattice.admin.save_failed"))
