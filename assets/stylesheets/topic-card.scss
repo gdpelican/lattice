@@ -6,8 +6,8 @@
   z-index: 990;
   box-shadow: 1px 2px 6px rgba(0,0,0, .25);
   margin-top: -2px;
-  color: $user_card_primary;
-  background: $user_card_background center center;
+  color: $primary;
+  background: $secondary center center;
   background-size: cover;
   -webkit-transition: opacity .2s, -webkit-transform .2s;
           transition: opacity .2s, transform .2s;
