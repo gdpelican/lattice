@@ -85,7 +85,7 @@ after_initialize do
       end
 
       def group_topics_by_tag(topics, field)
-        topics.joins(:tags).group_by { |topic| (topic.tags.pluck(:name) & send(field)).first }
+        topics.group_by { |topic| (topic.tags.pluck(:name) & send(field)).first }
       end
 
     end
@@ -147,6 +147,7 @@ after_initialize do
       end
 
       def excerpt
+        return unless object.posts.first
         first_paragraph_from object.posts.first.cooked
       end
 
