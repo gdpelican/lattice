@@ -81,11 +81,11 @@ after_initialize do
       private
 
       def available_topics_for(user)
-        TopicQuery.new(user, category: (self.category_id if self.limit_by_category), tags: self.rows).latest_results
+        TopicQuery.new(user, category: (self.category_id if self.limit_by_category), tags: self.rows, per_page: 1000).latest_results.includes(:user)
       end
 
       def group_topics_by_tag(topics, field)
-        topics.group_by { |topic| (topic.tags.pluck(:name) & send(field)).first }
+        topics.joins(:tags).group_by { |topic| (topic.tags.pluck(:name) & send(field)).first }
       end
 
     end
