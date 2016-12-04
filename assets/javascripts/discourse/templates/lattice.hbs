@@ -27,19 +27,21 @@
             <td class="lattice-table-cell">
               {{#if site.mobileView}}
                 <div class="lattice-mobile-cell">
-                  {{#link-to 'tags.show' row column}}
-                    <div class="lattice-topic-count">{{get model "topics" row column "count"}}</div>
+                  <a href="{{tagUrlFor row column}}">
+                    <div class="lattice-topic-count">{{topicDataFor model row column "count"}}</div>
                     <div>{{i18n 'groups.topics'}}</div>
-                  {{/link-to}}
+                  </a>
                 </div>
               {{else}}
-                {{#each (get model "topics" row column "data") as |topic|}}
-                  <a href="#" data-topic-card="{{topic.id}}">
-                    {{avatar topic.created_by imageSize="small" title=topic.title}}
-                  </a>
-                {{/each}}
-                {{#if (get model "topics" row column "view_more")}}
-                  {{#link-to 'tags.show' row column class="lattice-view-more"}}{{i18n 'lattice.client.view_more'}}{{/link-to}}
+                {{#if (topicDataFor model row column)}}
+                  {{#each (topicDataFor model row column) as |topic|}}
+                    <a href="#" data-topic-card="{{topic.id}}">
+                      {{avatar topic.created_by imageSize="small" title=topic.title}}
+                    </a>
+                  {{/each}}
+                <a class="lattice-view-all" href="{{tagUrlFor row column}}">{{i18n 'lattice.client.view_all'}}</a>
+                {{else}}
+                  <span>{{i18n 'lattice.client.empty'}}</span>
                 {{/if}}
               {{/if}}
             </td>
@@ -49,4 +51,4 @@
     </tbody>
   </table>
 </div>
-{{render "topic-card"}}
+{{render "topic-card" model}}

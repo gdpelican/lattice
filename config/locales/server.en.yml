@@ -1,0 +1,4 @@
+en:
+  site_settings:
+    lattice_enabled: "Enable Lattices plugin"
+    lattice_name: "What noun shall we call these on site?"

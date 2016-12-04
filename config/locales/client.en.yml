@@ -4,11 +4,12 @@ en:
       client:
         participants: Participants
         view_topic: View topic
-        view_more: View more
+        view_all: View all
+        empty: (empty)
       admin:
-        menu_title: Lattices
-        page_title: Lattices
-        none_selected: Please select a lattice from the left
+        menu_title: "{{name}}s"
+        page_title: "{{name}}s"
+        none_selected: "Please select a {{name}} from the left"
         enabled: Enabled
         title: Name
         slug: Slug
@@ -17,4 +18,4 @@ en:
         columns: Columns
         limit_by_category: Limit by category
         topics_per_cell: Topics per cell
-        new: New Lattice
+        new: "New {{name}}"

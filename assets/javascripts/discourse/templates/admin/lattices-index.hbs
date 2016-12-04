@@ -1,9 +1,9 @@
 <div class='span13'>
-  <p>{{i18n 'lattice.admin.none_selected'}}</p>
+  <p>{{i18n 'lattice.admin.none_selected' name=siteSettings.lattice_name}}</p>
 
   <div>
     {{#link-to 'adminLattice' 'new' class="btn"}}
-      {{fa-icon "plus"}} {{i18n 'lattice.admin.new'}}
+      {{fa-icon "plus"}} {{i18n 'lattice.admin.new' name=siteSettings.lattice_name}}
     {{/link-to}}
   </div>
 </div>

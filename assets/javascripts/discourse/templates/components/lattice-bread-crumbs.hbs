@@ -1,7 +1,7 @@
 {{#if lattices}}
   <a href {{action "expand"}} class="lattice-dropdown">
     <i class="fa fa-table"></i>
-    <span class="lattice-dropdown-text">{{i18n 'lattice.admin.menu_title'}}</span>
+    <span class="lattice-dropdown-text">{{i18n 'lattice.admin.menu_title' name=siteSettings.lattice_name}}</span>
     {{#if expanded}}
       <i class="lattice-caret fa fa-caret-down" />
     {{else}}

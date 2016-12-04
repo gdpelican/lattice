@@ -1,8 +1,8 @@
 export default {
   resource: 'admin',
   map() {
-    this.resource('adminLattices', { path: '/lattices' }, function() {
-      this.resource('adminLattice', { path: '/:id' })
+    this.route('adminLattices', { path: '/lattices', resetNamespace: true }, function() {
+      this.route('adminLattice', { path: '/:id', resetNamespace: true })
     })
   }
 }

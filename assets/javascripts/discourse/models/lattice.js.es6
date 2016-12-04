@@ -26,8 +26,7 @@ export default RestModel.extend({
             allTopics.push(t)
             return t
           }),
-          count: topicData.length,
-          view_more: this.get('topics_per_cell') < topicData.length
+          count: topicData.length
         }
       })
     })

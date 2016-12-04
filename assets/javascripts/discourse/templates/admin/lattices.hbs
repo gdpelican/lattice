@@ -3,7 +3,7 @@
 {{else}}
   <div class='row groups'>
     <div class='content-list span6'>
-      <h3>{{i18n 'lattice.admin.page_title'}}</h3>
+      <h3>{{i18n 'lattice.admin.page_title' name=siteSettings.lattice_name}}</h3>
       {{#if model}}
         <ul>
           {{#each lattice in model}}
@@ -17,7 +17,7 @@
       {{/if}}
       <div class="controls">
         {{#link-to 'adminLattice' 'new' class="btn"}}
-          {{fa-icon "plus"}} {{i18n 'lattice.admin.new'}}
+          {{fa-icon "plus"}} {{i18n 'lattice.admin.new' name=siteSettings.lattice_name}}
         {{/link-to}}
       </div>
     </div>

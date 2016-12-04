@@ -1,12 +1,12 @@
 import { ajax } from 'discourse/lib/ajax'
 import Lattice from '../models/lattice'
 import { registerHelper } from 'discourse-common/lib/helpers';
-import get from '../lib/get'
 import parameterize from '../lib/parameterize'
 import tagUrlFor from '../lib/tag-url-for'
+import topicDataFor from '../lib/topic-data-for'
 
-registerHelper('get', get)
 registerHelper('tagUrlFor', tagUrlFor)
+registerHelper('topicDataFor', topicDataFor)
 
 export default Discourse.Route.extend({
 

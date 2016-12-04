@@ -1,0 +1,7 @@
+plugins:
+  lattice_enabled:
+    default: true
+    client: true
+  lattice_name:
+    default: Lattice
+    client: true

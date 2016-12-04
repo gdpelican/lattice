@@ -43,10 +43,6 @@ after_initialize do
         end
       end
 
-      def all_tags_for(user)
-        available_topics_for(user)
-      end
-
       def value
         JSON.parse(self[:value] || "{}")
       end
