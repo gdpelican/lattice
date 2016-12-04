@@ -36,7 +36,7 @@
                 {{#if (topicDataFor model row column)}}
                   {{#each (topicDataFor model row column) as |topic|}}
                     <a href="#" data-topic-card="{{topic.id}}">
-                      {{avatar topic.created_by imageSize="small" title=topic.title}}
+                      {{avatar topic.created_by imageSize=siteSettings.lattice_avatar_size title=topic.title}}
                     </a>
                   {{/each}}
                 <a class="lattice-view-all" href="{{tagUrlFor row column}}">{{i18n 'lattice.client.view_all'}}</a>

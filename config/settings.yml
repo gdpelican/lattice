@@ -5,3 +5,6 @@ plugins:
   lattice_name:
     default: Lattice
     client: true
+  lattice_avatar_size:
+    default: small
+    client: true
