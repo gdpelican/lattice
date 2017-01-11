@@ -11,7 +11,7 @@
   <section class="{{unless expanded 'hidden'}} category-dropdown-menu chooser">
     {{#each lattices as |lattice|}}
       <div class="lattice-dropdown-item">
-        <a href="/lattices/{{lattice.id}}">{{lattice.title}}</a>
+        <a href="/lattices/{{lattice.id}}/{{lattice.slug}}">{{lattice.title}}</a>
       </div>
     {{/each}}
   </section>
