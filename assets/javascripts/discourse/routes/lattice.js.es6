@@ -4,6 +4,7 @@ import { registerHelper } from 'discourse-common/lib/helpers';
 import parameterize from '../lib/parameterize'
 import tagUrlFor from '../lib/tag-url-for'
 import topicDataFor from '../lib/topic-data-for'
+import DiscourseURL from 'discourse/lib/url'
 
 registerHelper('tagUrlFor', tagUrlFor)
 registerHelper('topicDataFor', topicDataFor)
