@@ -21,8 +21,12 @@ after_initialize do
     class Model < PluginStoreRow
       LATTICE_ATTRIBUTES = [:enabled, :title, :slug, :description, :rows, :columns, :topics_per_cell, :limit_by_category, :category_id]
 
+      def self.all
+        where(plugin_name: LATTICE_PLUGIN_NAME)
+      end
+
       def self.enabled
-        where(plugin_name: LATTICE_PLUGIN_NAME).select(&:enabled)
+        all.select(&:enabled)
       end
 
       def initialize(attrs = {})
