@@ -21,12 +21,12 @@ after_initialize do
     class Model < PluginStoreRow
       LATTICE_ATTRIBUTES = [:enabled, :title, :slug, :description, :rows, :columns, :topics_per_cell, :limit_by_category, :category_id]
 
-      def self.all
+      def self.lattices
         where(plugin_name: LATTICE_PLUGIN_NAME)
       end
 
       def self.enabled
-        all.select(&:enabled)
+        lattices.select(&:enabled)
       end
 
       def initialize(attrs = {})
@@ -171,7 +171,7 @@ after_initialize do
     end
 
     def index
-      @lattices = Lattice::Model.all
+      @lattices = Lattice::Model.lattices
       render json: ActiveModel::ArraySerializer.new(@lattices, each_serializer: Lattice::Serializer).as_json, status: 200
     end
 
