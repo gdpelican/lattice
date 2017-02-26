@@ -6,7 +6,7 @@
       <h3>{{i18n 'lattice.admin.page_title' name=siteSettings.lattice_name}}</h3>
       {{#if model}}
         <ul>
-          {{#each lattice in model}}
+          {{#each model as |lattice|}}
             <li>
               {{#link-to 'adminLattice' lattice.id}}{{lattice.title}}{{/link-to}}
             </li>
